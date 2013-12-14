@@ -6,12 +6,12 @@ namespace ConsoleBlogSystem.Models
 {
     public class BlogPost
     {
-        private ICollection<Comment> answers;
+        private ICollection<Comment> comments;
         private ICollection<Tag> tags;
 
         public BlogPost()
         {
-            answers = new HashSet<Comment>();
+            comments = new HashSet<Comment>();
         }
 
         public int Id { get; set; }
@@ -20,14 +20,14 @@ namespace ConsoleBlogSystem.Models
 
         public string Content { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
-        public ICollection<Comment> Answers
+        public ICollection<Comment> Comments
         {
-            get { return answers; }
-            set { answers = value; }
+            get { return comments; }
+            set { comments = value; }
         }
 
         public ICollection<Tag> Tags

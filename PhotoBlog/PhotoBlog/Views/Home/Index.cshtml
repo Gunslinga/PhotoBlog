@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-2.0.3.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn-submit').on('click', function (e) {
+            getPosts();
+        });
+    });
+
+    function getPosts() {
+        var loc = window.location,
+            host = loc.host,
+            protocol = loc.protocol,
+            url = protocol + "//" + host + '/api/posts';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("<div>" + data[i].Title + "</div>").appendTo("#container");
+                }
+            },
+            error: function (msg) { console.log(msg); }
+        });
+    }
+</script>
+
+<div id="container"></div>
+
+<input type="button" id="btn-submit" value="submit" />
