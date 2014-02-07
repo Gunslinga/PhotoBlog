@@ -1,0 +1,46 @@
+﻿@model PhotoBlog.Models.BlogPost
+
+@{
+    ViewBag.Title = "Client";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.debug.js")"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        function BlogPostsViewModel() {
+            var self = this;
+            self.blogPosts = ko.observableArray();
+            var baseUri = '@ViewBag.ApiUrl';
+
+            $.getJSON(baseUri, self.blogPosts);
+        }
+
+        $(document).ready(function () {
+            ko.applyBindings(new BlogPostsViewModel());
+        })
+    </script>
+}
+
+<h2>Client</h2>
+<div class="content">
+    <div class="float-left">
+        <ul id="update-blogPosts" data-bind="foreach: blogPosts">
+            <li>
+                <div>
+                    <div class="item"></div> <span data-bind="text: $data.Title"></span>
+
+                </div>
+                <div>
+                </div>
+                <div>
+                    <div class="item">Content</div>
+                    <div class="innerContent" data-bind="text: $data.Content">
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
