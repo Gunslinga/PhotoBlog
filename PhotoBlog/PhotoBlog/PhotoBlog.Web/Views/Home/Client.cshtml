@@ -1,46 +1,67 @@
 ﻿@model PhotoBlog.Models.BlogPost
 
 @{
-    ViewBag.Title = "Client";
+    ViewBag.Title = "Admin";
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.debug.js")"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.elastic.source.js"></script>
     <script type="text/javascript">
         function BlogPostsViewModel() {
             var self = this;
             self.blogPosts = ko.observableArray();
+
             var baseUri = '@ViewBag.ApiUrl';
+
+            self.create = function (formElement) {
+                $(formElement).validate();
+                if ($(formElement).valid()) {
+                    $.post(baseUri, $(formElement).serialize(), null, "json")
+                        .done(function (blogPost) {
+                            self.blogPosts.push(blogPost);
+                        });
+                }
+            }
+
+            self.update = function (blogPost) {
+                $.ajax({ type: "PUT", url: baseUri + '/' + blogPost.Id, data: blogPost });
+            }
+
+            self.remove = function (blogPost) {
+                $.ajax({ type: "DELETE", url: baseUri + '/' + blogPost.Id })
+                    .done(function () {
+                        self.blogPosts.remove(blogPost);
+                    });
+            }
 
             $.getJSON(baseUri, self.blogPosts);
         }
 
         $(document).ready(function () {
             ko.applyBindings(new BlogPostsViewModel());
-        })
+        });
+
     </script>
 }
 
-<h2>Client</h2>
-<div class="content">
-    <div class="float-left">
-        <ul id="update-blogPosts" data-bind="foreach: blogPosts">
-            <li>
-                <div>
-                    <div class="item"></div> <span data-bind="text: $data.Title"></span>
 
-                </div>
-                <div>
-                </div>
-                <div>
-                    <div class="item">Content</div>
-                    <div class="innerContent" data-bind="text: $data.Content">
+<h2>Admin</h2>
 
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+<div class="float-left">
+    <ul id="update-blogPosts" data-bind="foreach: blogPosts">
+        <li>
+            <div>
+                <div class="item"></div> <span data-bind="text: $data.Title"></span>
+            </div>
+            <div>
+                <textarea class="innerContent" data-bind="text: $data.Content"></textarea>
+            </div>
+            <input type="button" value="Update" data-bind="click: $root.update" />
+            <input type="button" value="Delete Item" data-bind="click: $root.remove" />
+        </li>
+    </ul>
 </div>
+
