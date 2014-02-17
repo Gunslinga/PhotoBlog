@@ -7,18 +7,29 @@ using PhotoBlog.Models;
 
 namespace PhotoBlog.Web.Controllers
 {
+    [RoutePrefix("api/blogPost")]
     public class BlogPostController : BaseController
     {
+        [Route("")]
         [ResponseType(typeof(IEnumerable<BlogPost>))]
         public IEnumerable<BlogPost> GetBlogPosts()
         {
             return data.BlogPosts.All();
         }
 
+        [Route("{categoryId:int}")]
         [ResponseType(typeof(IEnumerable<BlogPost>))]
         public IEnumerable<BlogPost> GetBlogPostsByCategory(int categoryId)
         {
-            return data.BlogPosts.All().Where(p => p.CategoryId == categoryId);
+            if (categoryId == Category.All)
+            {
+                return GetBlogPosts();
+            }
+            else
+            {
+
+                return data.BlogPosts.All().Where(p => p.CategoryId == categoryId);
+            }
         }
 
         // GET api/Client/5

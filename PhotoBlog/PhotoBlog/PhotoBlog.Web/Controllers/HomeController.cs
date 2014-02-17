@@ -20,15 +20,6 @@ namespace PhotoBlog.Web.Controllers
             return View();
         }
 
-        public ActionResult Client()
-        {
-            string apiUri = Url.HttpRouteUrl("DefaultApi", new { controller = "blogPost" });
-            ViewBag.ApiUrl = new Uri(Request.Url, apiUri).AbsoluteUri.ToString();
-            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "category" });
-
-            return View();
-        }
-
         public ActionResult Image()
         {
             string apiUri = Url.HttpRouteUrl("DefaultApi", new { controller = "image", });

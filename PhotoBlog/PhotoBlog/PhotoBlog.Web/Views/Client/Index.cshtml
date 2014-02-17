@@ -10,9 +10,13 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.elastic.source.js"></script>
     <script type="text/javascript">
-        var BlogPostsViewModel = function() {
+        var BlogPostsViewModel = function (category) {
             var self = this,
-                baseUri = '@ViewBag.ApiUrl';
+                baseUri = '@ViewBag.BlogPostsUrl';
+            debugger;
+            if (category) {
+                baseUri = baseUri + "/" + category;
+            }
                 
 
             self.blogPosts = ko.observableArray();
@@ -39,6 +43,7 @@
             }
 
             $.getJSON(baseUri, self.blogPosts);
+            //.always(function () { applyBindings(); });
         }
 
         var CategoriesViewModel = function() {
@@ -46,13 +51,18 @@
                 baseUri = '@ViewBag.CategoriesUrl';
 
             self.categories = ko.observableArray();
-
+       
             $.getJSON(baseUri, self.categories);
         }
 
-        $(document).ready(function () {
+
+        function applyBindings() {
             ko.applyBindings(new BlogPostsViewModel(), document.getElementById("update-blogPosts"));
             ko.applyBindings(new CategoriesViewModel(), document.getElementById("categories"));
+        }
+
+        $(document).ready(function () {
+            applyBindings();
         });
 
     </script>
@@ -78,8 +88,7 @@
     <ul id="categories" data-bind="foreach: categories">
         <li>
             <div>
-                <a data-bind="attr: { href: $data.CategoryId, title: $data.Name}, text : $data.Name"></a>
-             
+                <a data-bind="click: function() { BlogPostsViewModel(this.CategoryId); }, attr: { href: '', title: $data.Name}, text : $data.Name"></a>
             </div>
         </li>
     </ul>

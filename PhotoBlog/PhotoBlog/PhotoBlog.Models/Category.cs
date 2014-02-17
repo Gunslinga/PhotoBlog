@@ -8,11 +8,12 @@ namespace PhotoBlog.Models
 {
     public class Category
     {
+        public static int All = 3;
+
         private ICollection<BlogPost> posts;
 
         public Category()
         {
-            posts = new HashSet<BlogPost>();
         }
 
         public string Name { get; set; }

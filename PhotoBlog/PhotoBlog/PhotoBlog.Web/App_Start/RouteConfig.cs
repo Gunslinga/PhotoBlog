@@ -19,6 +19,10 @@ namespace PhotoBlog.Web
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "Api",
+                url: "api/{controller}/{action}/{id}");
+
             routes.MapHttpRoute("DefaultWithHelper", "blogPost/{action}/{id}");
 
            
