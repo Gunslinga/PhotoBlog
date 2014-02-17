@@ -1,5 +1,4 @@
 ﻿html {
-    background-color: #e2e2e2;
     margin: 0;
     padding: 0;
 }
@@ -34,10 +33,6 @@ a {
 
 .float-left {
     float: left;
-}
-
-.float-right {
-    float: right;
 }
 
 .clear-fix:after {
@@ -81,9 +76,7 @@ h5, h6 {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
     font-size: .8em;
-    height: 100px;
 }
 
 
@@ -223,12 +216,16 @@ input[type="checkbox"].input-validation-error {
 .content {
     clear: both;
     width: 90%;
+    margin-left: 50px;
 }
 
-.innerContent {
-    width: 500px;
-    word-wrap: break-word;
-    border: 1px solid black;
+textarea .innerContent, .multi-line {
+    width: 800px;
+    height: 500px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #444;
+    padding: 5px;
 }
 
 li {
@@ -260,21 +257,16 @@ li {
     font-size: .75em;
 }
 
+
 #update-blogPosts li {
     padding: 5px;
-    color: #666;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #666;
+    margin-top: 50px;
 }
 
     #update-blogPosts li .item {
-        width: 120px;
         display: inline-block;
-        text-align: right;
     }
 
-#blogPost textarea {
-    width: 900px;
-    height: 500px;
-}
+    #category{
+        border:1px solid black;
+    }

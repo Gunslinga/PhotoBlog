@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhotoBlog.Web.Controllers
@@ -11,7 +9,6 @@ namespace PhotoBlog.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
             return View();
         }
 
@@ -25,8 +22,9 @@ namespace PhotoBlog.Web.Controllers
 
         public ActionResult Client()
         {
-            string apiUri = Url.HttpRouteUrl("DefaultApi", new { controller = "client", });
+            string apiUri = Url.HttpRouteUrl("DefaultApi", new { controller = "blogPost" });
             ViewBag.ApiUrl = new Uri(Request.Url, apiUri).AbsoluteUri.ToString();
+            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "category" });
 
             return View();
         }

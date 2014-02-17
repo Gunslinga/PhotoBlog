@@ -30,6 +30,12 @@ namespace PhotoBlog.Data
             return this.DbSet.AsQueryable();
         }
 
+        public virtual IEnumerable<T> Where(Func<T, bool> predicate)
+        {
+            return DbSet.Where<T>(p => predicate(p));
+        }
+
+
         public virtual T GetById(int id)
         {
             return this.DbSet.Find(id);
