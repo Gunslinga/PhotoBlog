@@ -47,6 +47,19 @@
 
 <h2>Admin</h2>
 <div class="content">
+    <div>
+        <div class="container">
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
+                    <li>@Html.ActionLink("Client", "Index", "Client")</li>
+                    <li>@Html.ActionLink("New Post", "NewPost", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="float-left">
         <ul id="update-blogPosts" data-bind="foreach: blogPosts">
             <li>
@@ -75,4 +88,5 @@
             </fieldset>
         </form>
     </div>
+
 </div>

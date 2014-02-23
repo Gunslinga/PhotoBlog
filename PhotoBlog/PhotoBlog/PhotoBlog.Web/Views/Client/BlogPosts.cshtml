@@ -10,14 +10,10 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.elastic.source.js"></script>
     <script type="text/javascript">
+
+        var baseUri = '@ViewBag.BlogPostsUrl';
         var BlogPostsViewModel = function (category) {
-            var self = this,
-                baseUri = '@ViewBag.BlogPostsUrl';
-            debugger;
-            if (category) {
-                baseUri = baseUri + "/" + category;
-            }
-                
+            var self = this;
 
             self.blogPosts = ko.observableArray();
 
@@ -42,54 +38,71 @@
                     });
             }
 
-            $.getJSON(baseUri, self.blogPosts);
-            //.always(function () { applyBindings(); });
+            $.getJSON(getPostsUrl(), self.blogPosts);
         }
 
-        var CategoriesViewModel = function() {
+        function getPostsUrl(category) {
+            var url = baseUri;
+
+            if (category) {
+                url = baseUri + "/" + category;
+            }
+
+            return url;
+        }
+
+        var postsViewModel = new BlogPostsViewModel();
+
+        var CategoriesViewModel = function () {
             var self = this,
                 baseUri = '@ViewBag.CategoriesUrl';
 
             self.categories = ko.observableArray();
-       
+
             $.getJSON(baseUri, self.categories);
         }
 
-
         function applyBindings() {
-            ko.applyBindings(new BlogPostsViewModel(), document.getElementById("update-blogPosts"));
+            ko.applyBindings(postsViewModel, document.getElementById("update-blogPosts"));
             ko.applyBindings(new CategoriesViewModel(), document.getElementById("categories"));
         }
 
         $(document).ready(function () {
             applyBindings();
         });
-
     </script>
 }
+<div class="content">
+    <div>
+        <div class="container">
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
+                    <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="float-left">
+        <ul id="update-blogPosts" data-bind="foreach: blogPosts">
+            <li>
+                <div>
+                    <div class="item"></div> <span data-bind="text: $data.Title"></span>
+                </div>
+                <div>
+                    <div class="innerContent" data-bind="text: $data.Content"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
 
-<div class="float-left">
-    <ul id="update-blogPosts" data-bind="foreach: blogPosts">
-        <li>
-            <div>
-                <div class="item"></div> <span data-bind="text: $data.Title"></span>
-            </div>
-            <div>
-                <div class="innerContent" data-bind="text: $data.Content"></div>
-            </div>
-            <div>
-
-            </div>
-        </li>
-    </ul>
-</div>
-
-<div class="float-left">
-    <ul id="categories" data-bind="foreach: categories">
-        <li>
-            <div>
-                <a data-bind="click: function() { BlogPostsViewModel(this.CategoryId); }, attr: { href: '', title: $data.Name}, text : $data.Name"></a>
-            </div>
-        </li>
-    </ul>
+    <div class="float-left">
+        <ul id="categories" data-bind="foreach: categories">
+            <li>
+                <div>
+                    <a data-bind="click: function() { $.getJSON(getPostsUrl(this.CategoryId), postsViewModel.blogPosts); }, attr: { href: '', title: $data.Name}, text : $data.Name"></a>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

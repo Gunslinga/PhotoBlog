@@ -19,8 +19,6 @@ namespace PhotoBlog.Web.Controllers
 
         public BaseController()
             : this(new UowData())
-        {
-
-        }
-	}
+        { }
+    }
 }

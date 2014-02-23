@@ -11,6 +11,7 @@ namespace PhotoBlog.Models
         public static int All = 3;
 
         private ICollection<BlogPost> posts;
+        private ICollection<Photo> photos;
 
         public Category()
         {
@@ -28,5 +29,10 @@ namespace PhotoBlog.Models
             set { posts = value; }
         }
 
+        public virtual ICollection<Photo> Photos
+        {
+            get { return photos; }
+            set { photos = value; }
+        }
     }
 }
