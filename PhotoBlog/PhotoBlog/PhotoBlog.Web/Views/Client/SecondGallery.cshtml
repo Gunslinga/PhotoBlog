@@ -1,0 +1,83 @@
+﻿@model PhotoBlog.Models.Photo
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/knockout/knockout-3.0.0.debug.js"></script>
+    <script src="~/Scripts/lightbox/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/lightbox/js/lightbox-2.6.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/client/ClientViewModel.js"></script>
+
+    <script type="text/javascript">
+        var baseUri = '@ViewBag.GalleryUrl',
+            categoriesUri = '@ViewBag.CategoriesUrl',
+            photosViewModel = new ViewModel(),
+            categoriesViewModel = new CategoriesViewModel();
+
+        function applyBindings() {
+            ko.applyBindings(photosViewModel, document.getElementById("container"));
+            ko.applyBindings(categoriesViewModel, document.getElementById("photoCategories"));
+        };
+
+        ko.bindingHandlers.float = {
+            init: function (element, valueAccessor, allBindings, data, context) {
+                var index, floatValue;
+
+                index = valueAccessor();
+
+                floatValue = ko.computed(function () {
+                    var left = ko.utils.unwrapObservable(index) % 2 === 0;
+                    return left ? "left" : "right";
+                });
+
+                ko.applyBindingsToNode(element, {
+                    style: {
+                        cssFloat: floatValue
+                    }
+                });
+            }
+        };
+
+        $(document).ready(function () {
+            applyBindings();
+        });
+    </script>
+}
+<link href="~/Scripts/lightbox/css/lightbox.css" rel="stylesheet" />
+<link href="~/Content/Client/FirstGallery.css" rel="stylesheet" />
+<body>
+    <div id="mainContainer">
+        <div id="content">
+            <div class="navigation">
+                <div>
+                    <ul>
+                        <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
+                        <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="photoCategories" data-bind="foreach: categories">
+                <div data-bind="float: $index">
+                    <a data-bind="click: function() { $.getJSON(getDataUrl($data.Id), photosViewModel.collection)}, attr: { href: 'https://googledrive.com/host/0B3RF5_yNWgcLckN1eXhkUW5xRGc/cover1.jpg', title: $data.Name}">
+                        <img src="https://googledrive.com/host/0B3RF5_yNWgcLckN1eXhkUW5xRGc/cover1.jpg" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <div id="container" data-bind="foreach: collection">
+                    <div class="photos">
+                        <a data-bind="attr: {href: $data.Url}" data-lightbox="birds">
+                            <img data-bind="attr:{src: $data.ThumbUrl}" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

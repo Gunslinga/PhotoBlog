@@ -5,66 +5,22 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.debug.js")"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.elastic.source.js"></script>
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/knockout/knockout-3.0.0.debug.js"></script>
+    <script src="~/Scripts/lightbox/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/lightbox/js/lightbox-2.6.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/client/ClientViewModel.js"></script>
+
     <script type="text/javascript">
-
-        var baseUri = '@ViewBag.BlogPostsUrl';
-        var BlogPostsViewModel = function (category) {
-            var self = this;
-
-            self.blogPosts = ko.observableArray();
-
-            self.create = function (formElement) {
-                $(formElement).validate();
-                if ($(formElement).valid()) {
-                    $.post(baseUri, $(formElement).serialize(), null, "json")
-                        .done(function (blogPost) {
-                            self.blogPosts.push(blogPost);
-                        });
-                }
-            }
-
-            self.update = function (blogPost) {
-                $.ajax({ type: "PUT", url: baseUri + '/' + blogPost.Id, data: blogPost });
-            }
-
-            self.remove = function (blogPost) {
-                $.ajax({ type: "DELETE", url: baseUri + '/' + blogPost.Id })
-                    .done(function () {
-                        self.blogPosts.remove(blogPost);
-                    });
-            }
-
-            $.getJSON(getPostsUrl(), self.blogPosts);
-        }
-
-        function getPostsUrl(category) {
-            var url = baseUri;
-
-            if (category) {
-                url = baseUri + "/" + category;
-            }
-
-            return url;
-        }
-
-        var postsViewModel = new BlogPostsViewModel();
-
-        var CategoriesViewModel = function () {
-            var self = this,
-                baseUri = '@ViewBag.CategoriesUrl';
-
-            self.categories = ko.observableArray();
-
-            $.getJSON(baseUri, self.categories);
-        }
+        var baseUri = '@ViewBag.BlogPostsUrl',
+            categoriesUri = '@ViewBag.CategoriesUrl',
+            postsViewModel = new ViewModel(),
+            categoriesViewModel = new CategoriesViewModel();
 
         function applyBindings() {
-            ko.applyBindings(postsViewModel, document.getElementById("update-blogPosts"));
-            ko.applyBindings(new CategoriesViewModel(), document.getElementById("categories"));
+            ko.applyBindings(postsViewModel, document.getElementById("blogPost"));
+            ko.applyBindings(categoriesViewModel, document.getElementById("categories"));
         }
 
         $(document).ready(function () {
@@ -72,35 +28,33 @@
         });
     </script>
 }
-<div class="content">
-    <div>
-        <div class="container">
-            <div>
-                <ul>
-                    <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
-                    <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
-                </ul>
-            </div>
+
+<div class="blogPostsContainer">
+    <div class="blogPostsNavigation">
+        <div>
+            <ul>
+                <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
+                <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
+            </ul>
         </div>
     </div>
-    <div class="float-left">
-        <ul id="update-blogPosts" data-bind="foreach: blogPosts">
+
+    <div>
+        <ul id="categories" data-bind="foreach: categories">
             <li>
                 <div>
-                    <div class="item"></div> <span data-bind="text: $data.Title"></span>
-                </div>
-                <div>
-                    <div class="innerContent" data-bind="text: $data.Content"></div>
+                    <a data-bind="click: function() { $.getJSON(getDataUrl($data.Id), postsViewModel.collection); }, attr: { href: '', title: $data.Name}, text: $data.Name"></a>
                 </div>
             </li>
         </ul>
     </div>
 
-    <div class="float-left">
-        <ul id="categories" data-bind="foreach: categories">
+    <div>
+        <ul id="blogPost" data-bind="foreach: collection">
             <li>
                 <div>
-                    <a data-bind="click: function() { $.getJSON(getPostsUrl(this.CategoryId), postsViewModel.blogPosts); }, attr: { href: '', title: $data.Name}, text : $data.Name"></a>
+                    <span class="blogPostTitle" data-bind="text: $data.Title"></span>
+                    <div class="blogPostContent" data-bind="text: $data.Content"></div>
                 </div>
             </li>
         </ul>

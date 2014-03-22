@@ -22,7 +22,7 @@ namespace PhotoBlog.Models
 
         public string Title { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int? BlogPostCategoryId { get; set; }
 
         //[ScaffoldColumn(false)]
         //public virtual Category Category { get; set; }

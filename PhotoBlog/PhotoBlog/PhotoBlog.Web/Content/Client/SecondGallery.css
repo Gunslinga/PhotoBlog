@@ -1,5 +1,5 @@
 ﻿html {
-    background: url(images/bg.jpg) no-repeat center center fixed;
+    background: url(images/bgEmpty.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -8,8 +8,9 @@
 
 @media only screen and (max-width: 320px) {
 
-   body { font-size: 2em; }
-
+    body {
+        font-size: 2em;
+    }
 }
 
 html, body {
@@ -17,27 +18,29 @@ html, body {
     height: 100%;
 }
 
+
 .wrapper {
     width: 100%;
     min-height: 100%;
     position: relative;
 }
 
-.leftColumn {
+#photoContainer:first-child {
     width: 21%;
     min-height: 100%;
     position: fixed;
     left: 0;
+    border: 5px solid black;
 }
 
-.middleColumn {
+#photoContainer:nth-child(2) {
     width: 58.4%;
     height: 54.6%;
     position: fixed;
     left: 21%;
 }
 
-.rightColumn {
+/*.rightColumn {
     width: 20.5%;
     min-height: 100%;
     position: fixed;
@@ -50,9 +53,9 @@ html, body {
     position: fixed;
     bottom: 0;
     left: 0;
-}
+}*/
 
-body {
+/*body {
     color: #333;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
@@ -76,6 +79,9 @@ a {
     a:hover {
         background-color: grey;
     }
+
+/* main layout
+----------------------------------------------------------*/
 
 label {
     display: block;
@@ -153,7 +159,7 @@ blogPostsContent #category {
     margin: 200px auto;
 }
 
-    #photoCategories div {
+#photoCategories div {
         width: 90%;
         border: 1px solid red;
         margin: 0px auto;
@@ -177,8 +183,4 @@ blogPostsContent #category {
 .leftColumn:hover, .footer:hover, .rightColumn:hover {
     background: white;
     opacity: 0.5;
-}
-
-.floatLeft{
-
-}
+}*/

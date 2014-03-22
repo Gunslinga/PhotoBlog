@@ -12,7 +12,9 @@ namespace PhotoBlog.Data
 
         IRepository<Tag> Tags { get; }
 
-        IRepository<Category> Categorys { get; }
+        IRepository<BlogPostCategory> BlogPostCategories { get; }
+
+        IRepository<PhotoCategory> PhotoCategories { get; }
 
         IRepository<Comment> Comments { get; }
 

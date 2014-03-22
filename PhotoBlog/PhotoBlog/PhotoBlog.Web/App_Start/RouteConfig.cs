@@ -24,8 +24,6 @@ namespace PhotoBlog.Web
                 url: "api/{controller}/{action}/{id}");
 
             routes.MapHttpRoute("DefaultWithHelper", "blogPost/{action}/{id}");
-
-           
         }
     }
 }

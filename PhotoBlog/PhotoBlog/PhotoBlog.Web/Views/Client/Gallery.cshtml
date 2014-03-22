@@ -5,117 +5,94 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.debug.js")"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/knockout/knockout-3.0.0.debug.js"></script>
+    <script src="~/Scripts/lightbox/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/lightbox/js/lightbox-2.6.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/client/ClientViewModel.js"></script>
+
     <script type="text/javascript">
+        $('#footer').css('cursor', 'pointer').on('mouseover',
+            function () {
+                $("#footer").append('<div id="category">Nature</div>');
+                $("#category").css({
+                    'font-size': '3em',
+                    'position': 'absolute',
+                    'bottom': '30%', 'right': '20%'
 
-        var baseUri = '@ViewBag.GalleryUrl';
-        var PhotoViewModel = function (category) {
-            var self = this;
-            self.photos = ko.observableArray();
-
-            self.create = function (formElement) {
-                debugger;
-                $(formElement).validate();
-                if ($(formElement).valid()) {
-                    $.post(baseUri, $(formElement).serialize(), null, "json")
-                        .done(function (photo) {
-                            self.photos.push(photo);
-                        });
-                }
+                });
             }
+          );
 
-            self.update = function (photo) {
-                $.ajax({ type: "PUT", url: baseUri + '/' + photo.Id, data: photo });
-            }
+        $('#footer').css('cursor', 'pointer').on('mouseout',
+            function () {
+                $("#footer").html("");
+            });
 
-            self.remove = function (photo) {
-                $.ajax({ type: "DELETE", url: baseUri + '/' + photo.Id })
-                    .done(function () {
-                        self.blogPosts.remove(photo);
-                    });
-            }
-            debugger;
-            $.getJSON(getPhotosUrl(), self.photos);
-        }
-
-        function getPhotosUrl(category) {
-            var url = baseUri;
-
-            if (category) {
-                url = baseUri + "/" + category;
-            }
-
-            return url;
-        }
-
-        var photosViewModel = new PhotoViewModel();
-
-        var CategoriesViewModel = function () {
-            var self = this,
-                baseUri = '@ViewBag.CategoriesUrl';
-
-            self.categories = ko.observableArray();
-
-            $.getJSON(baseUri, self.categories);
-        }
-
-        function applyBindings() {
-            ko.applyBindings(photosViewModel, document.getElementById("update-blogPosts"));
-            ko.applyBindings(new CategoriesViewModel(), document.getElementById("categories"));
-        }
-
-        $(document).ready(function () {
-            applyBindings();
+        $('#footer').click(function () {
+            $('#wrapper').html("");
+            $('#wrapper').load('@Url.Action("FirstGallery", "Client")');
         });
+
+        //-----------------------------------------------------------------------------------------------
+
+        $('#left').css('cursor', 'pointer').on('mouseover',
+            function () {
+                $("#left").append('<div id="category">Urban</div>');
+                $("#category").css({
+                    'font-size': '3em',
+                    'position': 'absolute',
+                    'top': '30%', 'left': '25%'
+
+                });
+            }
+          );
+
+        $('#left').css('cursor', 'pointer').on('mouseout',
+           function () {
+               $("#left").html("");
+           }
+         );
+
+        $('#left').click(function () {
+            $('#wrapper').html("");
+            $('#wrapper').load('@Url.Action("SecondGallery", "Client")');
+        });
+
+
+        //-----------------------------------------------------------------------------------------------
+
+        $('#right').css('cursor', 'pointer').on('mouseover',
+            function () {
+                $("#right").append('<div id="category">Abstract</div>');
+                $("#category").css({
+                    'font-size': '3em',
+                    'position': 'absolute',
+                    'top': '12%', 'right': '5%'
+                });
+            }
+          );
+
+        $('#right').css('cursor', 'pointer').on('mouseout',
+           function () {
+               $("#right").html("");
+           }
+         );
+
+        $('#right').click(function () {
+            $('#wrapper').html("");
+            $('#wrapper').load('@Url.Action("ThirdGallery", "Client")');
+        });
+
+
     </script>
 }
-<div class="content">
-    <div>
-        <div class="container">
-            <div>
-                <ul>
-                    <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
-                    <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
-                </ul>
-            </div>
-        </div>
+<link href="~/Scripts/lightbox/css/lightbox.css" rel="stylesheet" />
+<body>
+    <div id="wrapper" class="wrapper">
+        <aside id="left" class="leftColumn"></aside>
+        <aside id="right" class="rightColumn"></aside>
+        <footer id="footer" class="footer"></footer>
     </div>
-
-    <div class="float-left">
-        <ul id="update-blogPosts" data-bind="foreach: photo">
-            <li>
-                <div>
-                    <div class="item"></div> <span data-bind="text: $data.Title"></span>
-                </div>
-                <div>
-                    <img class="photo" data-bind="src: '$data.Url'" /> 
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="float-right">
-        <h2>New post</h2>
-        <form id="blogPost" data-bind="submit: create">
-            @Html.ValidationSummary(true)
-            <fieldset>
-                @Html.EditorForModel()
-                <p>
-                    <input type="submit" value="Save" />
-                </p>
-            </fieldset>
-        </form>
-    </div>
-
-    <div class="float-left">
-        <ul id="categories" data-bind="foreach: categories">
-            <li>
-                <div>
-                    <a data-bind="click: function() { $.getJSON(getPostsUrl(this.CategoryId), postsViewModel.blogPosts); }, attr: { href: '', title: $data.Name}, text : $data.Name"></a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+</body>

@@ -39,9 +39,14 @@ namespace PhotoBlog.Data
             get { return GetRepository<Tag>(); }
         }
 
-        public IRepository<Category> Categorys
+        public IRepository<BlogPostCategory> BlogPostCategories
         {
-            get { return GetRepository<Category>(); }
+            get { return GetRepository<BlogPostCategory>(); }
+        }
+
+        public IRepository<PhotoCategory> PhotoCategories
+        {
+            get { return GetRepository<PhotoCategory>(); }
         }
 
         public IRepository<Comment> Comments

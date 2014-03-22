@@ -21,11 +21,11 @@ namespace PhotoBlog.Models
 
         public string Url { get; set; }
 
-        public int CategoryId { get; set; }
+        public string ThumbUrl { get; set; }
 
-        public virtual Category Category { get; set; }
+        public int GalleryCategoryId { get; set; }
 
-        public int AlbumId { get; set; }
+        public virtual PhotoCategory Category { get; set; }
 
         public ICollection<Tag> Tags
         {
