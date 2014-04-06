@@ -2,7 +2,7 @@
     var self = this;
 
     self.collection = ko.observableArray();
-    //$.getJSON(getDataUrl(category), self.collection);
+    $.getJSON(getDataUrl(category), self.collection);
 }
 
 function getDataUrl(category) {
@@ -16,6 +16,7 @@ function getDataUrl(category) {
 }
 
 var CategoriesViewModel = function () {
+
     var self = this;
     self.categories = ko.observableArray();
 

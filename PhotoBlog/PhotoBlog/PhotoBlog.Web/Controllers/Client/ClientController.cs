@@ -19,22 +19,52 @@ namespace PhotoBlog.Web.Controllers.Client
         public ActionResult Gallery()
         {
             ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/12";
-            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory";
 
             return View();
         }
         public ActionResult FirstGallery()
         {
             ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/13";
-            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory";
 
             return View();
         }
 
+        public ActionResult FirstGallerySub1()
+        {
+            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/16";
+            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory/16";
+
+            return View();
+        }
+
+        public ActionResult FirstGallerySub2()
+        {
+            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/17";
+            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory/17";
+
+            return View();
+        }
+
+
         public ActionResult SecondGallery()
         {
             ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/14";
-            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory";
+
+            return View();
+        }
+
+        public ActionResult SecondGallerySub1()
+        {
+            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/18";
+            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory/18";
+
+            return View();
+        }
+
+        public ActionResult SecondGallerySub2()
+        {
+            ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/19";
+            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory/19";
 
             return View();
         }
@@ -42,7 +72,6 @@ namespace PhotoBlog.Web.Controllers.Client
         public ActionResult ThirdGallery()
         {
             ViewBag.CategoriesUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/categories/15";
-            ViewBag.GalleryUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Gallery" }) + "/photosByCategory";
 
             return View();
         }

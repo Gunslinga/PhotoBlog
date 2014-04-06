@@ -8,8 +8,9 @@
 
 @media only screen and (max-width: 320px) {
 
-   body { font-size: 2em; }
-
+    body {
+        font-size: 2em;
+    }
 }
 
 html, body {
@@ -179,6 +180,36 @@ blogPostsContent #category {
     opacity: 0.5;
 }
 
-.floatLeft{
+#footer {
+    width: 100%;
+    height: 18%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background:grey;
+    opacity:0.4;
+}
 
+#left {
+    width: 21%;
+    min-height: 82%;
+    position: fixed;
+    left: 0;
+}
+
+#right {
+    width: 20.5%;
+    min-height: 82%;
+    position: fixed;
+    right: 0;
+}
+
+#footer div{
+    display: table;
+    margin: 0 auto;
+}
+
+#footer div a{
+    text-decoration:none;
+    color:white;
 }

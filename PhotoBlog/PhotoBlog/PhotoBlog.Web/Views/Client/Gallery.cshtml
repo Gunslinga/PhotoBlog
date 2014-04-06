@@ -13,38 +13,14 @@
     <script src="~/Scripts/client/ClientViewModel.js"></script>
 
     <script type="text/javascript">
-        $('#footer').css('cursor', 'pointer').on('mouseover',
-            function () {
-                $("#footer").append('<div id="category">Nature</div>');
-                $("#category").css({
-                    'font-size': '3em',
-                    'position': 'absolute',
-                    'bottom': '30%', 'right': '20%'
-
-                });
-            }
-          );
-
-        $('#footer').css('cursor', 'pointer').on('mouseout',
-            function () {
-                $("#footer").html("");
-            });
-
-        $('#footer').click(function () {
-            $('#wrapper').html("");
-            $('#wrapper').load('@Url.Action("FirstGallery", "Client")');
-        });
-
         //-----------------------------------------------------------------------------------------------
 
         $('#left').css('cursor', 'pointer').on('mouseover',
             function () {
                 $("#left").append('<div id="category">Urban</div>');
-                $("#category").css({
-                    'font-size': '3em',
-                    'position': 'absolute',
-                    'top': '30%', 'left': '25%'
-
+                $("#left").css({
+                    'background': 'white',
+                    'opacity': '0.5',
                 });
             }
           );
@@ -52,47 +28,45 @@
         $('#left').css('cursor', 'pointer').on('mouseout',
            function () {
                $("#left").html("");
+               $("#left").css({
+                   'background': 'none',
+                   'opacity': '0'
+               });
            }
          );
-
-        $('#left').click(function () {
-            $('#wrapper').html("");
-            $('#wrapper').load('@Url.Action("SecondGallery", "Client")');
-        });
-
 
         //-----------------------------------------------------------------------------------------------
 
         $('#right').css('cursor', 'pointer').on('mouseover',
             function () {
-                $("#right").append('<div id="category">Abstract</div>');
-                $("#category").css({
-                    'font-size': '3em',
-                    'position': 'absolute',
-                    'top': '12%', 'right': '5%'
+                $("#right").css({
+                    'background': 'white',
+                    'opacity': '0.5',
                 });
             }
           );
 
         $('#right').css('cursor', 'pointer').on('mouseout',
            function () {
-               $("#right").html("");
+               $("#right").css({
+                   'background': 'none',
+                   'opacity': '0'
+               });
            }
          );
-
-        $('#right').click(function () {
-            $('#wrapper').html("");
-            $('#wrapper').load('@Url.Action("ThirdGallery", "Client")');
-        });
-
-
     </script>
 }
 <link href="~/Scripts/lightbox/css/lightbox.css" rel="stylesheet" />
 <body>
     <div id="wrapper" class="wrapper">
-        <aside id="left" class="leftColumn"></aside>
-        <aside id="right" class="rightColumn"></aside>
-        <footer id="footer" class="footer"></footer>
+        <aside>@Html.ActionLink(" ", "FirstGallery", "Client", new { id = "left" })</aside>
+        <aside>@Html.ActionLink(" ", "SecondGallery", "Client", new { id = "right" })</aside>
+        <footer id="footer">
+            <div>
+                @Html.ActionLink("About", "FirstGallery", "Client")
+                @Html.ActionLink("Portfolio", "FirstGallery", "Client")
+                @Html.ActionLink("Blog", "FirstGallery", "Client")
+            </div>
+        </footer>
     </div>
 </body>

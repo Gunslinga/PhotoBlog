@@ -26,46 +26,29 @@
         $(document).ready(function () {
             applyBindings();
         });
-
-        $('#left').css('cursor', 'pointer').on('mouseover',
-         function () {
-             $("#left").css({
-                 'background': 'white',
-                 'opacity': '0.5',
-             });
-         }
-       );
-
-        $('#left').css('cursor', 'pointer').on('mouseout',
-            function () {
-                $("#left").css({
-                    'background': 'none',
-                    'opacity': '0'
-                });
-            });
-        //--------------------------------------------------------
     </script>
 }
 <link href="~/Scripts/lightbox/css/lightbox.css" rel="stylesheet" />
 <link href="~/Content/Client/FirstGallery.css" rel="stylesheet" />
 <body>
-    <div id="mainContainer">
-        <div id="content">
+    <div id="content">
+        <div class="navigation">
             <div>
-
-                <div>@Html.ActionLink(" ", "FirstGallerySub1", "Client", new { id = "left" })</div>
-                <div id="right"></div>
+                <ul>
+                    <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
+                    <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
+                </ul>
             </div>
-            <footer id="footer">
-                <div class="navigation">
-                    <div>
-                        <ul>
-                            <li>@Html.ActionLink("Home", "BlogPosts", "Client")</li>
-                            <li>@Html.ActionLink("Gallery", "Gallery", "Client")</li>
-                        </ul>
-                    </div>
+        </div>
+
+        <div class="gallery">
+            <div id="container" data-bind="foreach: collection">
+                <div class="photos">
+                    <a data-bind="attr: {href: $data.Url}" data-lightbox="birds">
+                        <img data-bind="attr:{src: $data.ThumbUrl}" />
+                    </a>
                 </div>
-            </footer>
+            </div>
         </div>
     </div>
 </body>
